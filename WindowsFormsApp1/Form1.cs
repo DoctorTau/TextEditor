@@ -14,37 +14,18 @@ namespace WindowsFormsApp1
     public partial class EditingForm : Form
     {
         List<FileInfo> files = new List<FileInfo>() {null};
+        string fileFilter = "txt files (*.txt)|*.txt|rtf files (*.rtf)|*.rtf|All files (*.*)|*.*";
 
         public EditingForm()
         {
             InitializeComponent();
         }
-
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-            
-        }
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
+        
         private void TabControl_DoubleClick(object sender, EventArgs e)
         {
             
         }
-
-        private void createToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
+        
         private void CreateButton_Click(object sender, EventArgs e)
         {
             TabPage newTabPage = new TabPage("Simple");
@@ -63,12 +44,17 @@ namespace WindowsFormsApp1
         {
             try
             {
-                OpenFileDialog dialog = new OpenFileDialog() { InitialDirectory = Directory.GetCurrentDirectory(), Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*" };
-                if(dialog.ShowDialog() != DialogResult.OK)
-                    return;
-                TabControl.SelectedTab.Controls[0].Text = File.ReadAllText(dialog.FileName);
-                TabControl.SelectedTab.Text = dialog.FileName.Split('\\').Last();
-            }catch (Exception ex)
+                if (TabControl.SelectedIndex == -1)
+                    CreateButton_Click(sender, e);
+                using (OpenFileDialog dialog = new OpenFileDialog() { InitialDirectory = Directory.GetCurrentDirectory(), Filter = fileFilter })
+                {
+                    if (dialog.ShowDialog() != DialogResult.OK)
+                        return;
+                    TabControl.SelectedTab.Controls[0].Text = File.ReadAllText(dialog.FileName);
+                    TabControl.SelectedTab.Text = dialog.FileName.Split('\\').Last();
+                }
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
@@ -99,20 +85,49 @@ namespace WindowsFormsApp1
         {
             try
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog() { InitialDirectory = Directory.GetCurrentDirectory(), Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*" };
-                saveFileDialog.ShowDialog();
-
-                FileInfo file = new FileInfo(saveFileDialog.FileName);
-                using (StreamWriter sw = new StreamWriter(file.FullName))
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog() { InitialDirectory = Directory.GetCurrentDirectory(), Filter = fileFilter })
                 {
-                    sw.Write(TabControl.SelectedTab.Controls[0].Text);
+                    saveFileDialog.ShowDialog();
+
+                    FileInfo file = new FileInfo(saveFileDialog.FileName);
+                    using (StreamWriter sw = new StreamWriter(file.FullName))
+                    {
+                        sw.Write(TabControl.SelectedTab.Controls[0].Text);
+                    }
+                    files[TabControl.SelectedIndex] = file;
+                    TabControl.SelectedTab.Text = file.Name;
                 }
-                files[TabControl.SelectedIndex] = file;
-                TabControl.SelectedTab.Text = file.Name;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
         }
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm(AutoSaveTimer);
+            settingsForm.Show();
+        }
+
+        private void SavingFile(FileInfo file)
+        {
+            if (file.Exists)
+            {
+                using (StreamWriter sw = new StreamWriter(file.FullName))
+                {
+                    sw.Write(TabControl.SelectedTab.Controls[0].Text);
+                }
+            }    
+        }
+
+        private void AutoSaveTimer_Tick(object sender, EventArgs e)
+        {
+            foreach(FileInfo file in files)
+            {
+                SavingFile(file);
+            }
+        }
+
     }
 }

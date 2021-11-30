@@ -9,3 +9,4 @@ C:\Users\drtta\Google Диск\programming\HSE\C#\TextEditor\WindowsFormsApp1\ob
 C:\Users\drtta\Google Диск\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\drtta\Google Диск\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\drtta\Google Диск\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\drtta\Google Диск\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.SettingsForm.resources
