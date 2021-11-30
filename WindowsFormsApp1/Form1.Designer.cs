@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditingForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -151,6 +152,7 @@
             // 
             // AutoSaveTimer
             // 
+            this.AutoSaveTimer.Enabled = true;
             this.AutoSaveTimer.Interval = 60000;
             this.AutoSaveTimer.Tick += new System.EventHandler(this.AutoSaveTimer_Tick);
             // 
@@ -162,6 +164,7 @@
             this.Controls.Add(this.TabControl);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "EditingForm";
             this.Text = "TextEditor";

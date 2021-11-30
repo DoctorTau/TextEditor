@@ -13,7 +13,7 @@ namespace WindowsFormsApp1
 {
     public partial class EditingForm : Form
     {
-        List<FileInfo> files = new List<FileInfo>() {null};
+        List<FileInfo> files = new List<FileInfo>();
         string fileFilter = "txt files (*.txt)|*.txt|rtf files (*.rtf)|*.rtf|All files (*.*)|*.*";
 
         public EditingForm()
@@ -37,21 +37,33 @@ namespace WindowsFormsApp1
             newTabPage.Controls.Add(textBox);
             files.Add(null);
             TabControl.TabPages.Add(newTabPage);
-            TabControl.SelectedTab = TabControl.TabPages[TabControl.TabPages.Count - 1];
+            TabControl.SelectedTab = newTabPage;
+        }
+
+        private bool CheckIsIn(FileInfo file)
+        {
+           foreach(FileInfo fileInfo in files)
+            {
+                if(fileInfo != null && fileInfo.FullName == file.FullName)
+                    return true;
+            } 
+           return false;
         }
 
         private void OpenButton_Click(object sender, EventArgs e)
         {
             try
             {
-                if (TabControl.SelectedIndex == -1)
-                    CreateButton_Click(sender, e);
                 using (OpenFileDialog dialog = new OpenFileDialog() { InitialDirectory = Directory.GetCurrentDirectory(), Filter = fileFilter })
                 {
                     if (dialog.ShowDialog() != DialogResult.OK)
                         return;
+                    if (CheckIsIn(new FileInfo(dialog.FileName)))
+                        throw new Exception("File is already openned");
+                    CreateButton_Click(sender, e);
                     TabControl.SelectedTab.Controls[0].Text = File.ReadAllText(dialog.FileName);
                     TabControl.SelectedTab.Text = dialog.FileName.Split('\\').Last();
+                    files[TabControl.SelectedIndex] = new FileInfo(dialog.FileName);
                 }
             }
             catch (Exception ex)
@@ -116,16 +128,16 @@ namespace WindowsFormsApp1
             {
                 using (StreamWriter sw = new StreamWriter(file.FullName))
                 {
-                    sw.Write(TabControl.SelectedTab.Controls[0].Text);
+                    sw.Write(TabControl.TabPages[files.IndexOf(file)].Controls[0].Text);
                 }
-            }    
+            }
         }
 
         private void AutoSaveTimer_Tick(object sender, EventArgs e)
         {
             foreach(FileInfo file in files)
             {
-                SavingFile(file);
+                if(file != null) SavingFile(file);
             }
         }
 

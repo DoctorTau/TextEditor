@@ -18,6 +18,7 @@ namespace WindowsFormsApp1
         {
             this.timer = timer;
             InitializeComponent();
+            AutoSavingTextBox.Text = timer.Interval.ToString();
         }
 
         private void ThermeBox_SelectedIndexChanged(object sender, EventArgs e)
