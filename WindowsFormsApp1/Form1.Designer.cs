@@ -44,6 +44,10 @@
             this.CountOfWords = new System.Windows.Forms.ToolStripStatusLabel();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.AutoSaveTimer = new System.Windows.Forms.Timer(this.components);
+            this.italicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.boldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unedrlinedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.strikeoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -75,33 +79,38 @@
             // CreateButton
             // 
             this.CreateButton.Name = "CreateButton";
-            this.CreateButton.Size = new System.Drawing.Size(114, 22);
+            this.CreateButton.Size = new System.Drawing.Size(180, 22);
             this.CreateButton.Text = "Create";
             this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
             // 
             // OpenButton
             // 
             this.OpenButton.Name = "OpenButton";
-            this.OpenButton.Size = new System.Drawing.Size(114, 22);
+            this.OpenButton.Size = new System.Drawing.Size(180, 22);
             this.OpenButton.Text = "Open";
             this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
             // SaveButton
             // 
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(114, 22);
+            this.SaveButton.Size = new System.Drawing.Size(180, 22);
             this.SaveButton.Text = "Save";
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // SaveAsButton
             // 
             this.SaveAsButton.Name = "SaveAsButton";
-            this.SaveAsButton.Size = new System.Drawing.Size(114, 22);
+            this.SaveAsButton.Size = new System.Drawing.Size(180, 22);
             this.SaveAsButton.Text = "Save As";
             this.SaveAsButton.Click += new System.EventHandler(this.SaveAsButton_Click);
             // 
             // EditButton
             // 
+            this.EditButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.italicToolStripMenuItem,
+            this.boldToolStripMenuItem,
+            this.unedrlinedToolStripMenuItem,
+            this.strikeoutToolStripMenuItem});
             this.EditButton.Name = "EditButton";
             this.EditButton.Size = new System.Drawing.Size(39, 20);
             this.EditButton.Text = "Edit";
@@ -156,6 +165,34 @@
             this.AutoSaveTimer.Interval = 60000;
             this.AutoSaveTimer.Tick += new System.EventHandler(this.AutoSaveTimer_Tick);
             // 
+            // italicToolStripMenuItem
+            // 
+            this.italicToolStripMenuItem.Name = "italicToolStripMenuItem";
+            this.italicToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.italicToolStripMenuItem.Text = "Italic";
+            this.italicToolStripMenuItem.Click += new System.EventHandler(this.italicToolStripMenuItem_Click);
+            // 
+            // boldToolStripMenuItem
+            // 
+            this.boldToolStripMenuItem.Name = "boldToolStripMenuItem";
+            this.boldToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.boldToolStripMenuItem.Text = "Bold";
+            this.boldToolStripMenuItem.Click += new System.EventHandler(this.boldToolStripMenuItem_Click);
+            // 
+            // unedrlinedToolStripMenuItem
+            // 
+            this.unedrlinedToolStripMenuItem.Name = "unedrlinedToolStripMenuItem";
+            this.unedrlinedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.unedrlinedToolStripMenuItem.Text = "Unedrlined";
+            this.unedrlinedToolStripMenuItem.Click += new System.EventHandler(this.unedrlinedToolStripMenuItem_Click);
+            // 
+            // strikeoutToolStripMenuItem
+            // 
+            this.strikeoutToolStripMenuItem.Name = "strikeoutToolStripMenuItem";
+            this.strikeoutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.strikeoutToolStripMenuItem.Text = "Strikeout";
+            this.strikeoutToolStripMenuItem.Click += new System.EventHandler(this.strikeoutToolStripMenuItem_Click);
+            // 
             // EditingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,6 +230,10 @@
         private System.Windows.Forms.ToolStripMenuItem SaveButton;
         private System.Windows.Forms.ToolStripMenuItem SaveAsButton;
         public System.Windows.Forms.Timer AutoSaveTimer;
+        private System.Windows.Forms.ToolStripMenuItem italicToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem boldToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem unedrlinedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem strikeoutToolStripMenuItem;
     }
 }
 

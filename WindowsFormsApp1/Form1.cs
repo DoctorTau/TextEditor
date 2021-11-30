@@ -141,5 +141,52 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void italicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox textToCahge = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            if(textToCahge.SelectedText != "")
+            {
+                var selectionFont = textToCahge.SelectionFont;
+
+                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size,selectionFont.Style ^ FontStyle.Italic);
+
+            }
+        }
+
+        private void boldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox textToCahge = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            if(textToCahge.SelectedText != "")
+            {
+                var selectionFont = textToCahge.SelectionFont;
+
+                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size,selectionFont.Style ^ FontStyle.Bold);
+
+            }
+        }
+
+        private void unedrlinedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox textToCahge = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            if(textToCahge.SelectedText != "")
+            {
+                var selectionFont = textToCahge.SelectionFont;
+
+                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size,selectionFont.Style ^ FontStyle.Underline);
+
+            }
+        }
+
+        private void strikeoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox textToCahge = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            if(textToCahge.SelectedText != "")
+            {
+                var selectionFont = textToCahge.SelectionFont;
+
+                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size,selectionFont.Style ^ FontStyle.Strikeout);
+
+            }
+        }
     }
 }
