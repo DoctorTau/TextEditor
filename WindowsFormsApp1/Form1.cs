@@ -100,8 +100,7 @@ namespace WindowsFormsApp1
             {
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog() { InitialDirectory = Directory.GetCurrentDirectory(), Filter = fileFilter })
                 {
-                    saveFileDialog.ShowDialog();
-                    if (dialog.ShowDialog() != DialogResult.OK)
+                    if (saveFileDialog.ShowDialog() != DialogResult.OK)
                         return;
 
                     FileInfo file = new FileInfo(saveFileDialog.FileName);
@@ -235,6 +234,30 @@ namespace WindowsFormsApp1
         {
             RichTextBox textBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             textBox.Text = textBox.Text.Insert(textBox.SelectionStart, Clipboard.GetText());
+        }
+
+        private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if(TabControl.TabPages.Count == 0) return;
+            selectAllToolStripMenuItem_Click(sender, e);
+        }
+
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if(TabControl.TabPages.Count == 0) return;
+            copyToolStripMenuItem_Click(sender, e);
+        }
+
+        private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if(TabControl.TabPages.Count == 0) return;
+            cutToolStripMenuItem_Click(sender, e);
+        }
+
+        private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if(TabControl.TabPages.Count == 0) return;
+            pasteToolStripMenuItem_Click(sender, e);
         }
     }
 }
