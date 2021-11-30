@@ -22,6 +22,45 @@ namespace WindowsFormsApp1
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
+            
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void TabControl_DoubleClick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void CreateButton_Click(object sender, EventArgs e)
+        {
+            TabPage newTabPage = new TabPage("Simple");
+            RichTextBox textBox = new RichTextBox
+            {
+                Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom,
+                Dock = DockStyle.Fill
+            };
+            newTabPage.Controls.Add(textBox);
+            files.Add(null);
+            TabControl.TabPages.Add(newTabPage);
+            TabControl.SelectedTab = TabControl.TabPages[TabControl.TabPages.Count - 1];
+        }
+
+        private void OpenButton_Click(object sender, EventArgs e)
+        {
             try
             {
                 OpenFileDialog dialog = new OpenFileDialog() { InitialDirectory = Directory.GetCurrentDirectory(), Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*" };
@@ -33,10 +72,30 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show(ex.Message, "Error");
             }
-            
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (files[TabControl.SelectedIndex] != null)
+                {
+                    using (StreamWriter sw = new StreamWriter(files[TabControl.SelectedIndex].FullName))
+                    {
+                        sw.Write(TabControl.SelectedTab.Controls[0].Text);
+                    }
+                }
+                else
+                {
+                    SaveAsButton_Click(sender, e);
+                }
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void SaveAsButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -55,47 +114,5 @@ namespace WindowsFormsApp1
                 MessageBox.Show(ex.Message, "Error");
             }
         }
-
-        private void TabControl_DoubleClick(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void createToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TabPage newTabPage = new TabPage("Simple");
-            RichTextBox textBox = new RichTextBox
-            {
-                Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom,
-                Dock = DockStyle.Fill
-            };
-            newTabPage.Controls.Add(textBox);
-            files.Add(null);
-            TabControl.TabPages.Add(newTabPage);
-            TabControl.SelectedTab = TabControl.TabPages[TabControl.TabPages.Count - 1];
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (files[TabControl.SelectedIndex] != null)
-                {
-                    using (StreamWriter sw = new StreamWriter(files[TabControl.SelectedIndex].FullName))
-                    {
-                        sw.Write(TabControl.SelectedTab.Controls[0].Text);
-                    }
-                }
-                else
-                {
-                    saveAsToolStripMenuItem_Click(sender, e);
-                }
-            }catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error");
-            }
-        }
-
-        
     }
 }

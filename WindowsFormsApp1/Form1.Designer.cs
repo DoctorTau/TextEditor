@@ -31,6 +31,10 @@
             this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CreateButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveAsButton = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,31 +66,60 @@
             // 
             // createToolStripMenuItem
             // 
+            this.createToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CreateButton,
+            this.OpenButton,
+            this.SaveButton,
+            this.SaveAsButton});
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.createToolStripMenuItem.Text = "Create";
-            this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.createToolStripMenuItem.Text = "File";
+            // 
+            // CreateButton
+            // 
+            this.CreateButton.Name = "CreateButton";
+            this.CreateButton.Size = new System.Drawing.Size(180, 22);
+            this.CreateButton.Text = "Create";
+            this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
+            // 
+            // OpenButton
+            // 
+            this.OpenButton.Name = "OpenButton";
+            this.OpenButton.Size = new System.Drawing.Size(180, 22);
+            this.OpenButton.Text = "Open";
+            this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(180, 22);
+            this.SaveButton.Text = "Save";
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
+            // SaveAsButton
+            // 
+            this.SaveAsButton.Name = "SaveAsButton";
+            this.SaveAsButton.Size = new System.Drawing.Size(180, 22);
+            this.SaveAsButton.Text = "Save As";
+            this.SaveAsButton.Click += new System.EventHandler(this.SaveAsButton_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.saveAsToolStripMenuItem.Text = "Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // TextEditingPole
             // 
@@ -180,6 +213,10 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.ToolStripMenuItem CreateButton;
+        private System.Windows.Forms.ToolStripMenuItem OpenButton;
+        private System.Windows.Forms.ToolStripMenuItem SaveButton;
+        private System.Windows.Forms.ToolStripMenuItem SaveAsButton;
     }
 }
 
