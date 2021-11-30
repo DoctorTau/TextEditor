@@ -259,5 +259,48 @@ namespace WindowsFormsApp1
             if(TabControl.TabPages.Count == 0) return;
             pasteToolStripMenuItem_Click(sender, e);
         }
+
+        private bool IsSaved(TabPage tabPage)
+        {
+            string curText = tabPage.Controls[0].Text;
+            FileInfo file = files[TabControl.TabPages.IndexOf(tabPage)];
+            if (file != null && file.Exists)
+            {
+                using(StreamReader sr = new StreamReader(file.FullName))
+                {
+                    string textInFile = sr.ReadToEnd();
+                    if(curText == textInFile)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        private DialogResult AskOfSaving()
+        {
+            string messege = "Do you want to save file before closing";
+            string nameOfMessege = "File is not saved";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+            return MessageBox.Show(messege, nameOfMessege, buttons);
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!IsSaved(TabControl.SelectedTab)){
+                var dialogResult = AskOfSaving();
+                switch (dialogResult)
+                {
+                    case DialogResult.Yes:
+                        SaveButton_Click(sender, e);
+                        break;
+                    case DialogResult.No:
+                        break;
+                    case DialogResult.Cancel:
+                        return;
+                }
+            }
+            files.RemoveAt(TabControl.SelectedIndex);
+            TabControl.TabPages.Remove(TabControl.SelectedTab);
+        }
     }
 }
