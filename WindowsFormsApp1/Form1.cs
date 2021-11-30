@@ -32,7 +32,8 @@ namespace WindowsFormsApp1
             RichTextBox textBox = new RichTextBox
             {
                 Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                ContextMenuStrip = contextMenuStrip
             };
             newTabPage.Controls.Add(textBox);
             files.Add(null);
@@ -100,6 +101,8 @@ namespace WindowsFormsApp1
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog() { InitialDirectory = Directory.GetCurrentDirectory(), Filter = fileFilter })
                 {
                     saveFileDialog.ShowDialog();
+                    if (dialog.ShowDialog() != DialogResult.OK)
+                        return;
 
                     FileInfo file = new FileInfo(saveFileDialog.FileName);
                     using (StreamWriter sw = new StreamWriter(file.FullName))
@@ -187,6 +190,51 @@ namespace WindowsFormsApp1
                 textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size,selectionFont.Style ^ FontStyle.Strikeout);
 
             }
+        }
+
+        private void boldContextMenu_Click(object sender, EventArgs e)
+        {
+            boldToolStripMenuItem_Click(sender, e);
+        }
+
+        private void italicContextMenu_Click(object sender, EventArgs e)
+        {
+            italicToolStripMenuItem_Click(sender, e);
+        }
+
+        private void underlineContexMenu_Click(object sender, EventArgs e)
+        { 
+            unedrlinedToolStripMenuItem_Click(sender, e);
+        }
+
+        private void strickeouteContextMenu_Click(object sender, EventArgs e)
+        {
+            strikeoutToolStripMenuItem_Click(sender, e);
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox textBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            textBox.SelectAll();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox textBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            Clipboard.SetText(textBox.SelectedText);
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox textBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            Clipboard.SetText(textBox.SelectedText);
+            textBox.SelectedText = "";
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox textBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            textBox.Text = textBox.Text.Insert(textBox.SelectionStart, Clipboard.GetText());
         }
     }
 }
