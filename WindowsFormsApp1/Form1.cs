@@ -25,10 +25,10 @@ namespace WindowsFormsApp1
         {
             
         }
-        
+
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            TabPage newTabPage = new TabPage("Simple");
+            TabPage newTabPage = new TabPage("Simple*");
             RichTextBox textBox = new RichTextBox
             {
                 Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom,
@@ -66,6 +66,7 @@ namespace WindowsFormsApp1
                     TabControl.SelectedTab.Text = dialog.FileName.Split('\\').Last();
                     files[TabControl.SelectedIndex] = new FileInfo(dialog.FileName);
                 }
+                TabControl.SelectedTab.Text = TabControl.SelectedTab.Text.Trim('*');  
             }
             catch (Exception ex)
             {
@@ -88,6 +89,7 @@ namespace WindowsFormsApp1
                 {
                     SaveAsButton_Click(sender, e);
                 }
+                TabControl.SelectedTab.Text = TabControl.SelectedTab.Text.Trim('*');  
             }catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
@@ -301,6 +303,29 @@ namespace WindowsFormsApp1
             }
             files.RemoveAt(TabControl.SelectedIndex);
             TabControl.TabPages.Remove(TabControl.SelectedTab);
+        }
+
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach(TabPage tab in TabControl.TabPages)
+            {
+                if (!IsSaved(tab) && !tab.Text.Contains('*'))
+                    tab.Text += "*";
+                else if(IsSaved(tab))
+                    tab.Text = tab.Text.Trim('*');
+            }
+        }
+
+        private void ChangeTextTimer_Tick(object sender, EventArgs e)
+        {
+            if (TabControl.TabPages.Count > 0) {
+                RichTextBox textInBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                if (!IsSaved(TabControl.SelectedTab) && !TabControl.SelectedTab.Text.Contains('*'))
+                    TabControl.SelectedTab.Text += '*';
+                else if(IsSaved(TabControl.SelectedTab))
+                    TabControl.SelectedTab.Text = TabControl.SelectedTab.Text.Trim('*');
+                CountOfWords.Text = textInBox.Text != ""? textInBox.Text.Split().Length.ToString() + " words":  "0 words";        
+            }
         }
     }
 }
