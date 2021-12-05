@@ -5,6 +5,11 @@
       "ProjectGuid": "42685cb0-02f1-46b1-b3bb-fb5d46116763",
       "DisplayName": "WindowsFormsApp1",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1

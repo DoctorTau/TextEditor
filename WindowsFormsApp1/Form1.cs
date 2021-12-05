@@ -15,6 +15,7 @@ namespace WindowsFormsApp1
     {
         List<FileInfo> files = new List<FileInfo>();
         string fileFilter = "txt files (*.txt)|*.txt|rtf files (*.rtf)|*.rtf|All files (*.*)|*.*";
+        TextBoxTab curTab = null;
 
         public EditingForm()
         {
@@ -28,17 +29,10 @@ namespace WindowsFormsApp1
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            TabPage newTabPage = new TabPage("Simple*");
-            RichTextBox textBox = new RichTextBox
-            {
-                Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom,
-                Dock = DockStyle.Fill,
-                ContextMenuStrip = contextMenuStrip
-            };
-            newTabPage.Controls.Add(textBox);
-            files.Add(null);
-            TabControl.TabPages.Add(newTabPage);
-            TabControl.SelectedTab = newTabPage;
+            TextBoxTab newTab = new TextBoxTab("Simple", contextMenuStrip);
+            TabControl.TabPages.Add(newTab);
+            TabControl.SelectedTab = newTab;
+            curTab = newTab;
         }
 
         private bool CheckIsIn(FileInfo file)
@@ -59,14 +53,15 @@ namespace WindowsFormsApp1
                 {
                     if (dialog.ShowDialog() != DialogResult.OK)
                         return;
-                    if (CheckIsIn(new FileInfo(dialog.FileName)))
+                    FileInfo opennedFile = new FileInfo(dialog.FileName);
+                    if (CheckIsIn(opennedFile))
                         throw new Exception("File is already openned");
                     CreateButton_Click(sender, e);
-                    TabControl.SelectedTab.Controls[0].Text = File.ReadAllText(dialog.FileName);
-                    TabControl.SelectedTab.Text = dialog.FileName.Split('\\').Last();
-                    files[TabControl.SelectedIndex] = new FileInfo(dialog.FileName);
+                    curTab.fileInfo = opennedFile;
+                    curTab.UpdateText();
+                    curTab.Text = opennedFile.Name;
                 }
-                TabControl.SelectedTab.Text = TabControl.SelectedTab.Text.Trim('*');  
+                curTab.Text = curTab.Text.Trim('*');  
             }
             catch (Exception ex)
             {
@@ -78,18 +73,18 @@ namespace WindowsFormsApp1
         {
             try
             {
-                if (files[TabControl.SelectedIndex] != null)
+                if (curTab.fileInfo != null)
                 {
-                    using (StreamWriter sw = new StreamWriter(files[TabControl.SelectedIndex].FullName))
+                    using (StreamWriter sw = new StreamWriter(curTab.fileInfo.FullName))
                     {
-                        sw.Write(TabControl.SelectedTab.Controls[0].Text);
+                        sw.Write(curTab.Controls[0].Text);
                     }
                 }
                 else
                 {
                     SaveAsButton_Click(sender, e);
                 }
-                TabControl.SelectedTab.Text = TabControl.SelectedTab.Text.Trim('*');  
+                curTab.Text = curTab.Text.Trim('*');  
             }catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
@@ -105,13 +100,12 @@ namespace WindowsFormsApp1
                     if (saveFileDialog.ShowDialog() != DialogResult.OK)
                         return;
 
-                    FileInfo file = new FileInfo(saveFileDialog.FileName);
-                    using (StreamWriter sw = new StreamWriter(file.FullName))
+                    FileInfo fileToSave = new FileInfo(saveFileDialog.FileName);
+                    using (StreamWriter sw = new StreamWriter(fileToSave.FullName))
                     {
-                        sw.Write(TabControl.SelectedTab.Controls[0].Text);
+                        sw.Write(curTab.Controls[0].Text);
                     }
-                    files[TabControl.SelectedIndex] = file;
-                    TabControl.SelectedTab.Text = file.Name;
+                    curTab.Text = fileToSave.Name;
                 }
             }
             catch (Exception ex)
@@ -139,15 +133,21 @@ namespace WindowsFormsApp1
 
         private void AutoSaveTimer_Tick(object sender, EventArgs e)
         {
-            foreach(FileInfo file in files)
+            foreach(var tab in TabControl.TabPages)
             {
-                if(file != null) SavingFile(file);
+                var textTab = (TextBoxTab)tab;
+                SavingFile(textTab.fileInfo);
+                
             }
+            //foreach(FileInfo file in files)
+            //{
+            //    if(file != null) SavingFile(file);
+            //}
         }
 
         private void italicToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox textToCahge = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             if(textToCahge.SelectedText != "")
             {
                 var selectionFont = textToCahge.SelectionFont;
@@ -159,7 +159,7 @@ namespace WindowsFormsApp1
 
         private void boldToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox textToCahge = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             if(textToCahge.SelectedText != "")
             {
                 var selectionFont = textToCahge.SelectionFont;
@@ -171,7 +171,7 @@ namespace WindowsFormsApp1
 
         private void unedrlinedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox textToCahge = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             if(textToCahge.SelectedText != "")
             {
                 var selectionFont = textToCahge.SelectionFont;
@@ -183,7 +183,7 @@ namespace WindowsFormsApp1
 
         private void strikeoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox textToCahge = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             if(textToCahge.SelectedText != "")
             {
                 var selectionFont = textToCahge.SelectionFont;
@@ -215,26 +215,26 @@ namespace WindowsFormsApp1
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox textBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            RichTextBox textBox = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             textBox.SelectAll();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox textBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            RichTextBox textBox = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             Clipboard.SetText(textBox.SelectedText);
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox textBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            RichTextBox textBox = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             Clipboard.SetText(textBox.SelectedText);
             textBox.SelectedText = "";
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox textBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            RichTextBox textBox = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             textBox.Text = textBox.Text.Insert(textBox.SelectionStart, Clipboard.GetText());
         }
 
@@ -288,7 +288,7 @@ namespace WindowsFormsApp1
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!IsSaved(TabControl.SelectedTab)){
+            if (!curTab.isSaved) { 
                 var dialogResult = AskOfSaving();
                 switch (dialogResult)
                 {
@@ -301,19 +301,16 @@ namespace WindowsFormsApp1
                         return;
                 }
             }
-            files.RemoveAt(TabControl.SelectedIndex);
-            TabControl.TabPages.Remove(TabControl.SelectedTab);
+            TabControl.TabPages.Remove(curTab);
         }
 
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach(TabPage tab in TabControl.TabPages)
-            {
-                if (!IsSaved(tab) && !tab.Text.Contains('*'))
-                    tab.Text += "*";
-                else if(IsSaved(tab))
-                    tab.Text = tab.Text.Trim('*');
-            }
+            
+            if(TabControl.SelectedIndex != -1)
+                curTab = (TextBoxTab)TabControl.SelectedTab;
+            else
+                curTab = null;
         }
 
         private void ChangeTextTimer_Tick(object sender, EventArgs e)
