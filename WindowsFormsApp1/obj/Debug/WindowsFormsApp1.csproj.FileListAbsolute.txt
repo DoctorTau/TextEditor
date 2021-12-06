@@ -10,15 +10,15 @@ C:\Users\drtta\Google Диск\programming\HSE\C#\TextEditor\WindowsFormsApp1\ob
 C:\Users\drtta\Google Диск\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\drtta\Google Диск\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 C:\Users\drtta\Google Диск\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.SettingsForm.resources
-C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
-C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
-C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
 C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
 C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.SuggestedBindingRedirects.cache
 C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.EditingForm.resources
-C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
 C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.SettingsForm.resources
 C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
 C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
-C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
-C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\bin\Debug\TextEditor.exe.config
+C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\bin\Debug\TextEditor.exe
+C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\bin\Debug\TextEditor.pdb
+C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\TextEditor.Properties.Resources.resources
+C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\TextEditor.exe
+C:\Users\user\Google_Drive\programming\HSE\C#\TextEditor\WindowsFormsApp1\obj\Debug\TextEditor.pdb

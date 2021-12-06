@@ -349,5 +349,26 @@ namespace WindowsFormsApp1
                 }
             }
         }
+
+        private void changeFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dialogResult = new FontDialog();
+                dialogResult.ShowDialog();
+                RichTextBox textInBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                textInBox.SelectionFont = dialogResult.Font;
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void openInNewWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditingForm newWindow = new EditingForm();
+            newWindow.OpenButton_Click(sender, e);
+            newWindow.Show();
+        }
     }
 }
