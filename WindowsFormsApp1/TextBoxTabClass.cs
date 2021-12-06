@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-namespace WindowsFormsApp1
+namespace TextEditor
 {
     internal class TextBoxTab : TabPage
     {
@@ -20,7 +20,8 @@ namespace WindowsFormsApp1
             {
                 Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom,
                 Dock = DockStyle.Fill,
-                ContextMenuStrip = contextMenuStrip
+                Font = new System.Drawing.Font("Times New Roman", 12.0f),
+            ContextMenuStrip = contextMenuStrip
             };
             Dock = DockStyle.Fill;
             Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;

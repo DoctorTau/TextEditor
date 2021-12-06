@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-namespace WindowsFormsApp1
+namespace TextEditor
 {
     public partial class EditingForm : Form
     {
@@ -331,9 +331,16 @@ namespace WindowsFormsApp1
                         TabControl.TabPages.Remove(curTab);
                         break;
                     case DialogResult.Cancel:
+                        e.Cancel = true;
                         return;
                     }
                 }
+            }
+
+            if(Application.OpenForms.Count > 1)
+            {
+                e.Cancel = true;
+                this.Hide();
             }
         }
 
@@ -369,6 +376,28 @@ namespace WindowsFormsApp1
             EditingForm newWindow = new EditingForm();
             newWindow.OpenButton_Click(sender, e);
             newWindow.Show();
+        }
+
+        private void AutoSaveTimer_Tick(object sender, EventArgs e)
+        {
+            foreach (var tab in TabControl.TabPages)
+            {
+                var textTab = (TextBoxTab)tab;
+                if (!textTab.isSaved)
+                {
+                    try
+                    {
+                        SavingFile(curTab.fileInfo, curTab.Controls[0].Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error");
+                        return;
+                    }
+                    curTab.isSaved = true;
+                    curTab.Text = textTab.Text.Trim('*');
+                }
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace TextEditor
 {
     partial class SettingsForm
     {
