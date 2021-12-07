@@ -8,18 +8,58 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace TextEditor
 {
+    struct SettingsParams {
+        public int autoSaveTime { get; set; }
+        public string therme { get; set; }
+        public List<string> opennedFiles { get; set; }
+
+        public SettingsParams(int autoSaveTime, string therme, List<string> ls  = null) {
+            this.autoSaveTime = autoSaveTime;
+            this.therme = therme;
+            this.opennedFiles = ls;
+        }
+    }
+
     public partial class EditingForm : Form
     {
         List<FileInfo> files = new List<FileInfo>();
         string fileFilter = "txt files (*.txt)|*.txt|rtf files (*.rtf)|*.rtf|All files (*.*)|*.*";
         TextBoxTab curTab = null;
+        SettingsParams settingsParams = new SettingsParams(60000, "Light");
+
 
         public EditingForm()
         {
             InitializeComponent();
+            try
+            {
+                var settings = File.ReadAllText("settings.ini");
+                settingsParams = JsonSerializer.Deserialize<SettingsParams>(settings);
+                AutoSaveTimer.Interval = settingsParams.autoSaveTime;
+                if (settingsParams.opennedFiles != null && settingsParams.opennedFiles.Count > 0)
+                {
+                    TabControl.TabPages.Clear();
+                    foreach (var filePath in settingsParams.opennedFiles)
+                        TabControl.TabPages.Add(new TextBoxTab(new FileInfo(filePath), ContextMenuStrip));
+                    TabControl.SelectedTab = TabControl.TabPages[0];
+                    curTab = (TextBoxTab)TabControl.TabPages[0];
+                    ChangeTherme(settingsParams.therme);
+                }
+            }catch (Exception ex)
+            {
+
+            }
+        }
+        
+        public void ChangeAutoSaveInterval(int newInterval)
+        {
+            settingsParams.autoSaveTime = newInterval;
+            AutoSaveTimer.Interval  = newInterval;
         }
         
         private void TabControl_DoubleClick(object sender, EventArgs e)
@@ -45,6 +85,35 @@ namespace TextEditor
            return false;
         }
 
+        public void ChangeTherme(string therme)
+        {
+            if(therme == "Light")
+            {
+                settingsParams.therme = "Light";
+                BackColor = SystemColors.Window;
+                MenuStrip.BackColor = SystemColors.Window;
+                foreach(var tab in TabControl.TabPages)
+                {
+                    var textTab = (TextBoxTab)tab;
+                    RichTextBox textBoxToChange = textTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                    textBoxToChange.BackColor = SystemColors.Window;
+                }
+            }
+
+            else if(therme == "Dark")
+            {
+                settingsParams.therme = "Dark";
+                MenuStrip.BackColor= SystemColors.ControlDarkDark;
+                BackColor = SystemColors.ControlDarkDark;
+                foreach(var tab in TabControl.TabPages)
+                {
+                    var textTab = (TextBoxTab)tab;
+                    RichTextBox textBoxToChange = textTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                    textBoxToChange.BackColor = SystemColors.ControlDarkDark;
+                }
+            }
+        } 
+
         private void OpenButton_Click(object sender, EventArgs e)
         {
             try
@@ -60,6 +129,7 @@ namespace TextEditor
                     curTab.fileInfo = opennedFile;
                     curTab.UpdateText();
                     curTab.Text = opennedFile.Name;
+                    curTab.isSaved = true;
                 }
                 curTab.Text = curTab.Text.Trim('*');  
             }
@@ -116,8 +186,8 @@ namespace TextEditor
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
-            SettingsForm settingsForm = new SettingsForm(AutoSaveTimer);
-            settingsForm.Show();
+            SettingsForm settingsForm = new SettingsForm(AutoSaveTimer, settingsParams.therme);
+            settingsForm.Show(this);
         }
 
         private void SavingFile(FileInfo file, string text)
@@ -131,6 +201,7 @@ namespace TextEditor
 
         private void italicToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(TabControl.TabPages.Count == 0) return;
             RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             if(textToCahge.SelectedText != "")
             {
@@ -143,6 +214,7 @@ namespace TextEditor
 
         private void boldToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(TabControl.TabPages.Count == 0) return;
             RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             if(textToCahge.SelectedText != "")
             {
@@ -155,6 +227,7 @@ namespace TextEditor
 
         private void unedrlinedToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(TabControl.TabPages.Count == 0) return;
             RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             if(textToCahge.SelectedText != "")
             {
@@ -167,6 +240,7 @@ namespace TextEditor
 
         private void strikeoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(TabControl.TabPages.Count == 0) return;
             RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             if(textToCahge.SelectedText != "")
             {
@@ -297,27 +371,17 @@ namespace TextEditor
                 curTab = null;
         }
 
-        private void ChangeTextTimer_Tick(object sender, EventArgs e)
-        {
-            if (TabControl.TabPages.Count > 0) {
-                RichTextBox textInBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
-                if (!IsSaved(TabControl.SelectedTab) && !TabControl.SelectedTab.Text.Contains('*'))
-                    TabControl.SelectedTab.Text += '*';
-                else if(IsSaved(TabControl.SelectedTab))
-                    TabControl.SelectedTab.Text = TabControl.SelectedTab.Text.Trim('*');
-                CountOfWords.Text = textInBox.Text != ""? textInBox.Text.Split().Length.ToString() + " words":  "0 words";        
-            }
-        }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void EditingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             foreach (var tab in TabControl.TabPages) {
                 var textTab = (TextBoxTab)tab;
+                TabControl.SelectedTab = textTab;
                 if (!textTab.isSaved)
                 {
                     DialogResult dialogResult = AskOfSaving();
@@ -325,10 +389,8 @@ namespace TextEditor
                     {
                     case DialogResult.Yes:
                         SaveButton_Click(sender, e);
-                        closeToolStripMenuItem_Click(sender, e); 
                         break;
                     case DialogResult.No:
-                        TabControl.TabPages.Remove(curTab);
                         break;
                     case DialogResult.Cancel:
                         e.Cancel = true;
@@ -336,12 +398,23 @@ namespace TextEditor
                     }
                 }
             }
-
-            if(Application.OpenForms.Count > 1)
+            settingsParams.opennedFiles = GetTabsInList();
+            var jsonString = JsonSerializer.Serialize(settingsParams, options: new JsonSerializerOptions
             {
-                e.Cancel = true;
-                this.Hide();
+                WriteIndented = true
+            });
+            File.WriteAllText("settings.ini", jsonString);
+
+        }
+
+        private List<string> GetTabsInList()
+        {
+            List<string> result = new List<string>();
+            foreach(var tab in TabControl.TabPages) {
+                TextBoxTab textBoxTab = (TextBoxTab)tab;
+                result.Add(textBoxTab.fileInfo.FullName);
             }
+            return result;
         }
 
         private void saveAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -359,6 +432,8 @@ namespace TextEditor
 
         private void changeFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(TabControl.TabPages.Count == 0)
+                return;
             try
             {
                 var dialogResult = new FontDialog();
@@ -374,13 +449,16 @@ namespace TextEditor
         private void openInNewWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditingForm newWindow = new EditingForm();
+            newWindow.TabControl.TabPages.Clear();
             newWindow.OpenButton_Click(sender, e);
+            newWindow.ChangeTherme(settingsParams.therme);
+            newWindow.ChangeAutoSaveInterval(settingsParams.autoSaveTime);
             newWindow.Show();
         }
 
         private void AutoSaveTimer_Tick(object sender, EventArgs e)
         {
-            foreach (var tab in TabControl.TabPages)
+            foreach (var tab in  TabControl.TabPages)
             {
                 var textTab = (TextBoxTab)tab;
                 if (!textTab.isSaved)

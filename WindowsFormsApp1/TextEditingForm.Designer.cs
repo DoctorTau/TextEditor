@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditingForm));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateButton = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,25 +67,25 @@
             this.italicContextMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.underlineContexMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.strickeouteContextMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
+            this.MenuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // MenuStrip
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createToolStripMenuItem,
             this.EditButton,
             this.FormatButton,
             this.SettingsButton});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(909, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.MenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.MenuStrip.Name = "MenuStrip";
+            this.MenuStrip.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.MenuStrip.Size = new System.Drawing.Size(909, 24);
+            this.MenuStrip.TabIndex = 1;
+            this.MenuStrip.Text = "menuStrip1";
             // 
             // createToolStripMenuItem
             // 
@@ -106,7 +106,7 @@
             // 
             this.CreateButton.Name = "CreateButton";
             this.CreateButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.CreateButton.Size = new System.Drawing.Size(187, 22);
+            this.CreateButton.Size = new System.Drawing.Size(261, 22);
             this.CreateButton.Text = "Create";
             this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
             // 
@@ -114,14 +114,16 @@
             // 
             this.OpenButton.Name = "OpenButton";
             this.OpenButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.OpenButton.Size = new System.Drawing.Size(187, 22);
+            this.OpenButton.Size = new System.Drawing.Size(261, 22);
             this.OpenButton.Text = "Open";
             this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
             // openInNewWindowToolStripMenuItem
             // 
             this.openInNewWindowToolStripMenuItem.Name = "openInNewWindowToolStripMenuItem";
-            this.openInNewWindowToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.openInNewWindowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.openInNewWindowToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
             this.openInNewWindowToolStripMenuItem.Text = "Open in new window";
             this.openInNewWindowToolStripMenuItem.Click += new System.EventHandler(this.openInNewWindowToolStripMenuItem_Click);
             // 
@@ -129,7 +131,7 @@
             // 
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.SaveButton.Size = new System.Drawing.Size(187, 22);
+            this.SaveButton.Size = new System.Drawing.Size(261, 22);
             this.SaveButton.Text = "Save";
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
@@ -138,7 +140,7 @@
             this.SaveAsButton.Name = "SaveAsButton";
             this.SaveAsButton.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.SaveAsButton.Size = new System.Drawing.Size(187, 22);
+            this.SaveAsButton.Size = new System.Drawing.Size(261, 22);
             this.SaveAsButton.Text = "Save As";
             this.SaveAsButton.Click += new System.EventHandler(this.SaveAsButton_Click);
             // 
@@ -147,14 +149,14 @@
             this.saveAllToolStripMenuItem.Name = "saveAllToolStripMenuItem";
             this.saveAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
-            this.saveAllToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.saveAllToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
             this.saveAllToolStripMenuItem.Text = "Save all";
             this.saveAllToolStripMenuItem.Click += new System.EventHandler(this.saveAllToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -162,7 +164,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -399,14 +401,14 @@
             this.ClientSize = new System.Drawing.Size(909, 588);
             this.Controls.Add(this.TabControl);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.MenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.MenuStrip;
             this.Name = "EditingForm";
             this.Text = "TextEditor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditingForm_FormClosing);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.MenuStrip.ResumeLayout(false);
+            this.MenuStrip.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
@@ -417,7 +419,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EditButton;
         private System.Windows.Forms.ToolStripMenuItem FormatButton;

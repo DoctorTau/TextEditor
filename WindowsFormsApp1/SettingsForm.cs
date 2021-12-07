@@ -14,11 +14,12 @@ namespace TextEditor
     {
         Timer timer;
 
-        public SettingsForm(Timer timer)
+        public SettingsForm(Timer timer, string therme)
         {
             this.timer = timer;
             InitializeComponent();
             AutoSavingTextBox.Text = timer.Interval.ToString();
+            ThermeBox.Text = therme;
         }
 
         private void ThermeBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -29,17 +30,23 @@ namespace TextEditor
         private void ApplySettingsButton_Click(object sender, EventArgs e)
         {
             int timerInterval = 60000;
+            EditingForm parrentForm  = (Owner as EditingForm);
             if(int.TryParse(AutoSavingTextBox.Text, out timerInterval))
             {
-                timer.Interval = timerInterval;
+                parrentForm.ChangeAutoSaveInterval(timerInterval);
             }
+            else
+            {
+                System.Media.SystemSounds.Beep.Play();
+                return;
+            }
+            parrentForm.ChangeTherme(ThermeBox.Text);
         }
 
         private void ToDefaultSetiingsButton_Click(object sender, EventArgs e)
         {
             AutoSavingTextBox.Text = "60000";
             ThermeBox.Text = "Light";
-            LanguageComboBox.Text = "English";
             ApplySettingsButton_Click(sender, e);
         }
     }
