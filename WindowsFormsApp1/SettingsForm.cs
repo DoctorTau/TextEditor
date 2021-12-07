@@ -10,10 +10,18 @@ using System.Windows.Forms;
 
 namespace TextEditor
 {
+    /// <summary>
+    /// Form which chenges app's properties.
+    /// </summary>
     public partial class SettingsForm : Form
     {
         Timer timer;
 
+        /// <summary>
+        /// Constructor of a settings form by timer and therme.
+        /// </summary>
+        /// <param name="timer">Timer from main form.</param>
+        /// <param name="therme">Therme from main form.</param>
         public SettingsForm(Timer timer, string therme)
         {
             this.timer = timer;
@@ -22,11 +30,11 @@ namespace TextEditor
             ThermeBox.Text = therme;
         }
 
-        private void ThermeBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Applys settings.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void ApplySettingsButton_Click(object sender, EventArgs e)
         {
             int timerInterval = 60000;
@@ -43,6 +51,11 @@ namespace TextEditor
             parrentForm.ChangeTherme(ThermeBox.Text);
         }
 
+        /// <summary>
+        /// Changes settings to default.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void ToDefaultSetiingsButton_Click(object sender, EventArgs e)
         {
             AutoSavingTextBox.Text = "60000";

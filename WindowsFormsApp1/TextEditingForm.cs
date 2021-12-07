@@ -75,16 +75,11 @@ namespace TextEditor
             AutoSaveTimer.Interval = newInterval;
         }
 
-        private void TabControl_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// Creates an empty file and adds it to the TabControl.  
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Object which sends event.</param>
+        /// <param name="e">Event info.</param>
         private void CreateButton_Click(object sender, EventArgs e)
         {
             TextBoxTab newTab = new TextBoxTab("Simple", contextMenuStrip);
@@ -95,6 +90,11 @@ namespace TextEditor
             curTab = newTab;
         }
 
+        /// <summary>
+        /// Checks is file already  pen.
+        /// </summary>
+        /// <param name="file">Filename</param>
+        /// <returns>True if file is already open, false otherwise</returns>
         private bool CheckIsIn(FileInfo file)
         {
             foreach (FileInfo fileInfo in files)
@@ -105,6 +105,10 @@ namespace TextEditor
             return false;
         }
 
+        /// <summary>
+        /// Chenges forms therme.
+        /// </summary>
+        /// <param name="therme">Name of the new therme.</param>
         public void ChangeTherme(string therme)
         {
             if (therme == "Light")
@@ -134,6 +138,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Opens file from PC in Editing window.
+        /// </summary>
+        /// <param name="sender">Object which sent  an event.</param>
+        /// <param name="e">Event info.</param>
         private void OpenButton_Click(object sender, EventArgs e)
         {
             try
@@ -159,6 +168,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Write text from the textbox to the file, which is oppend. If file is new than "SaveAs" method will be called.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void SaveButton_Click(object sender, EventArgs e)
         {
             try
@@ -182,6 +196,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Ask user to select or create new file to write text from the current textbox to it.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void SaveAsButton_Click(object sender, EventArgs e)
         {
             try
@@ -205,12 +224,22 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Opens an "Settings" Window.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             SettingsForm settingsForm = new SettingsForm(AutoSaveTimer, settingsParams.therme);
             settingsForm.Show(this);
         }
 
+        /// <summary>
+        /// Write all test to the file.
+        /// </summary>
+        /// <param name="file">File to write in.</param>
+        /// <param name="text">Text to write.</param>
         private void SavingFile(FileInfo file, string text)
         {
             if (file.Exists)
@@ -220,6 +249,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Makes selected text italic.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void italicToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (TabControl.TabPages.Count == 0) return;
@@ -233,6 +267,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Makes selected text bold.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void boldToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (TabControl.TabPages.Count == 0) return;
@@ -246,6 +285,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Makes selected text underlined.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void unedrlinedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (TabControl.TabPages.Count == 0) return;
@@ -259,6 +303,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Makes selected text strikedout.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void strikeoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (TabControl.TabPages.Count == 0) return;
@@ -272,38 +321,73 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Makes selected text bold.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void boldContextMenu_Click(object sender, EventArgs e)
         {
             boldToolStripMenuItem_Click(sender, e);
         }
 
-        private void italicContextMenu_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Makes selected text italic.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
+       private void italicContextMenu_Click(object sender, EventArgs e)
         {
             italicToolStripMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// Makes selected text underlined.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void underlineContexMenu_Click(object sender, EventArgs e)
         {
             unedrlinedToolStripMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// Makes selected text strickedout.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void strickeouteContextMenu_Click(object sender, EventArgs e)
         {
             strikeoutToolStripMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// Selects all text in the textbox.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RichTextBox textBox = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             textBox.SelectAll();
         }
 
+        /// <summary>
+        /// Adds selected text to the buffer. 
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RichTextBox textBox = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             Clipboard.SetText(textBox.SelectedText);
         }
 
+        /// <summary>
+        /// Adds selected text to buffer and delete it.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RichTextBox textBox = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
@@ -311,52 +395,65 @@ namespace TextEditor
             textBox.SelectedText = "";
         }
 
+        /// <summary>
+        /// Paste text form buffer.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RichTextBox textBox = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             textBox.Text = textBox.Text.Insert(textBox.SelectionStart, Clipboard.GetText());
         }
 
+        /// <summary>
+        /// Selects all text in the textbox.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (TabControl.TabPages.Count == 0) return;
             selectAllToolStripMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// Adds selected text to the buffer. 
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (TabControl.TabPages.Count == 0) return;
             copyToolStripMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// Adds selected text to buffer and delete it.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (TabControl.TabPages.Count == 0) return;
             cutToolStripMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// Paste text form buffer.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (TabControl.TabPages.Count == 0) return;
             pasteToolStripMenuItem_Click(sender, e);
         }
 
-        private bool IsSaved(TabPage tabPage)
-        {
-            string curText = tabPage.Controls[0].Text;
-            FileInfo file = files[TabControl.TabPages.IndexOf(tabPage)];
-            if (file != null && file.Exists)
-            {
-                using (StreamReader sr = new StreamReader(file.FullName))
-                {
-                    string textInFile = sr.ReadToEnd();
-                    if (curText == textInFile)
-                        return true;
-                }
-            }
-            return false;
-        }
-
+        /// <summary>
+        /// Makes a dialog with a user to ask, do they wants to save the file.
+        /// </summary>
+        /// <returns>User's answer.</returns>
         private DialogResult AskOfSaving()
         {
             string messege = "Do you want to save file before closing";
@@ -365,6 +462,11 @@ namespace TextEditor
             return MessageBox.Show(messege, nameOfMessege, buttons);
         }
 
+        /// <summary>
+        /// Closes selected tab, and ask about saving if it's not.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!curTab.isSaved)
@@ -384,6 +486,11 @@ namespace TextEditor
             TabControl.TabPages.Remove(curTab);
         }
 
+        /// <summary>
+        /// Change curTab variable when user changes tab.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -394,11 +501,21 @@ namespace TextEditor
         }
 
 
+        /// <summary>
+        /// Closes the form.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// Ask about saving unsaved files and write settings parameters to the JSON. 
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void EditingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             foreach (var tab in TabControl.TabPages)
@@ -430,6 +547,10 @@ namespace TextEditor
 
         }
 
+        /// <summary>
+        /// Gets all filepathes from the openned tabs.
+        /// </summary>
+        /// <returns>List with filepathes.</returns>
         private List<string> GetTabsInList()
         {
             List<string> result = new List<string>();
@@ -442,6 +563,11 @@ namespace TextEditor
             return result;
         }
 
+        /// <summary>
+        /// Saves all files in current window.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void saveAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (var tab in TabControl.TabPages)
@@ -456,6 +582,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Ask user about new font and chenge selected text to it or set this font to the future text.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void changeFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (TabControl.TabPages.Count == 0)
@@ -473,6 +604,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Opens new window with selected file.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void openInNewWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditingForm newWindow = new EditingForm();
@@ -483,6 +619,11 @@ namespace TextEditor
             newWindow.Show();
         }
 
+        /// <summary>
+        /// Saves all unsaved files.
+        /// </summary>
+        /// <param name="sender">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void AutoSaveTimer_Tick(object sender, EventArgs e)
         {
             foreach (var tab in TabControl.TabPages)

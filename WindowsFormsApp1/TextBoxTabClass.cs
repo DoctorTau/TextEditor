@@ -8,12 +8,20 @@ using System.IO;
 
 namespace TextEditor
 {
+    /// <summary>
+    /// Tab page with RichTextBox and file.
+    /// </summary>
     internal class TextBoxTab : TabPage
     {
         RichTextBox textBox;
         public FileInfo fileInfo;
         public bool isSaved { get; set; }     
 
+        /// <summary>
+        /// Constructor of a new tab page by name.
+        /// </summary>
+        /// <param name="name">Name of the new tab page.</param>
+        /// <param name="contextMenuStrip">Context menu in the RichTextBox.</param>
         public TextBoxTab(string name, ContextMenuStrip contextMenuStrip):base()
         {
             textBox = new RichTextBox
@@ -31,6 +39,11 @@ namespace TextEditor
             isSaved = false;
         }
 
+        /// <summary>
+        /// Costructor of a new tab page by file.
+        /// </summary>
+        /// <param name="fileToOpen">File in tab page.</param>
+        /// <param name="contextMenuStrip">Context menu in the RichTextBox.</param>
         public TextBoxTab(FileInfo fileToOpen, ContextMenuStrip contextMenuStrip):base()
         {
             textBox = new RichTextBox
@@ -50,6 +63,11 @@ namespace TextEditor
             isSaved = true;
         }
 
+        /// <summary>
+        /// Changes the isSaved paramether.
+        /// </summary>
+        /// <param name="sneder">Object which sent an event.</param>
+        /// <param name="e">Event data.</param>
         private void changeSaveStatus(object sneder, EventArgs e)
         {
             isSaved = false;
@@ -57,6 +75,10 @@ namespace TextEditor
                 Text += "*";
         }
 
+        /// <summary>
+        /// Updates text in the RichTextBox by reading a file.
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
         public void UpdateText()
         {
             if (fileInfo.Exists)
@@ -68,6 +90,5 @@ namespace TextEditor
             throw new ArgumentException("Unknown error");
         }
 
-        public Tuple<string, string> GetNameAndText() => new Tuple<string, string>(Text, Controls[0].Text);
     }
 }

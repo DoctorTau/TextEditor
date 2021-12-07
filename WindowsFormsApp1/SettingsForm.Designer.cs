@@ -108,7 +108,6 @@
             this.ThermeBox.Size = new System.Drawing.Size(100, 21);
             this.ThermeBox.TabIndex = 6;
             this.ThermeBox.Text = "Light";
-            this.ThermeBox.SelectedIndexChanged += new System.EventHandler(this.ThermeBox_SelectedIndexChanged);
             // 
             // SettingsForm
             // 

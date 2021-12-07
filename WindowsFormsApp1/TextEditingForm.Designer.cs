@@ -302,7 +302,6 @@
             this.TabControl.Size = new System.Drawing.Size(897, 536);
             this.TabControl.TabIndex = 7;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
-            this.TabControl.DoubleClick += new System.EventHandler(this.TabControl_DoubleClick);
             // 
             // AutoSaveTimer
             // 
