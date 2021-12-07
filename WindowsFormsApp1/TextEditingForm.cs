@@ -13,12 +13,17 @@ using System.Text.Json.Serialization;
 
 namespace TextEditor
 {
-    struct SettingsParams {
+    /// <summary>
+    /// Struct with main settings. 
+    /// </summary>
+    struct SettingsParams
+    {
         public int autoSaveTime { get; set; }
         public string therme { get; set; }
         public List<string> opennedFiles { get; set; }
 
-        public SettingsParams(int autoSaveTime, string therme, List<string> ls  = null) {
+        public SettingsParams(int autoSaveTime, string therme, List<string> ls = null)
+        {
             this.autoSaveTime = autoSaveTime;
             this.therme = therme;
             this.opennedFiles = ls;
@@ -33,6 +38,9 @@ namespace TextEditor
         SettingsParams settingsParams = new SettingsParams(60000, "Light");
 
 
+        /// <summary>
+        /// Constructor for main form. 
+        /// </summary>
         public EditingForm()
         {
             InitializeComponent();
@@ -50,26 +58,38 @@ namespace TextEditor
                     curTab = (TextBoxTab)TabControl.TabPages[0];
                     ChangeTherme(settingsParams.therme);
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
         }
-        
+
+        /// <summary>
+        /// Changes interval of autosave settings. 
+        /// </summary>
+        /// <param name="newInterval">New interval in milliseconds.</param>
         public void ChangeAutoSaveInterval(int newInterval)
         {
             settingsParams.autoSaveTime = newInterval;
-            AutoSaveTimer.Interval  = newInterval;
-        }
-        
-        private void TabControl_DoubleClick(object sender, EventArgs e)
-        {
-            
+            AutoSaveTimer.Interval = newInterval;
         }
 
+        private void TabControl_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Creates an empty file and adds it to the TabControl.  
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateButton_Click(object sender, EventArgs e)
         {
             TextBoxTab newTab = new TextBoxTab("Simple", contextMenuStrip);
+            if (settingsParams.therme == "Dark")
+                newTab.Controls[0].BackColor = SystemColors.ControlDarkDark;
             TabControl.TabPages.Add(newTab);
             TabControl.SelectedTab = newTab;
             curTab = newTab;
@@ -77,22 +97,22 @@ namespace TextEditor
 
         private bool CheckIsIn(FileInfo file)
         {
-           foreach(FileInfo fileInfo in files)
+            foreach (FileInfo fileInfo in files)
             {
-                if(fileInfo != null && fileInfo.FullName == file.FullName)
+                if (fileInfo != null && fileInfo.FullName == file.FullName)
                     return true;
-            } 
-           return false;
+            }
+            return false;
         }
 
         public void ChangeTherme(string therme)
         {
-            if(therme == "Light")
+            if (therme == "Light")
             {
                 settingsParams.therme = "Light";
                 BackColor = SystemColors.Window;
                 MenuStrip.BackColor = SystemColors.Window;
-                foreach(var tab in TabControl.TabPages)
+                foreach (var tab in TabControl.TabPages)
                 {
                     var textTab = (TextBoxTab)tab;
                     RichTextBox textBoxToChange = textTab.Controls.OfType<RichTextBox>().FirstOrDefault();
@@ -100,19 +120,19 @@ namespace TextEditor
                 }
             }
 
-            else if(therme == "Dark")
+            else if (therme == "Dark")
             {
                 settingsParams.therme = "Dark";
-                MenuStrip.BackColor= SystemColors.ControlDarkDark;
+                MenuStrip.BackColor = SystemColors.ControlDarkDark;
                 BackColor = SystemColors.ControlDarkDark;
-                foreach(var tab in TabControl.TabPages)
+                foreach (var tab in TabControl.TabPages)
                 {
                     var textTab = (TextBoxTab)tab;
                     RichTextBox textBoxToChange = textTab.Controls.OfType<RichTextBox>().FirstOrDefault();
                     textBoxToChange.BackColor = SystemColors.ControlDarkDark;
                 }
             }
-        } 
+        }
 
         private void OpenButton_Click(object sender, EventArgs e)
         {
@@ -131,7 +151,7 @@ namespace TextEditor
                     curTab.Text = opennedFile.Name;
                     curTab.isSaved = true;
                 }
-                curTab.Text = curTab.Text.Trim('*');  
+                curTab.Text = curTab.Text.Trim('*');
             }
             catch (Exception ex)
             {
@@ -154,8 +174,9 @@ namespace TextEditor
                 {
                     SaveAsButton_Click(sender, e);
                 }
-                curTab.Text = curTab.Text.Trim('*');  
-            }catch (Exception ex)
+                curTab.Text = curTab.Text.Trim('*');
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
@@ -201,52 +222,52 @@ namespace TextEditor
 
         private void italicToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(TabControl.TabPages.Count == 0) return;
+            if (TabControl.TabPages.Count == 0) return;
             RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
-            if(textToCahge.SelectedText != "")
+            if (textToCahge.SelectedText != "")
             {
                 var selectionFont = textToCahge.SelectionFont;
 
-                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size,selectionFont.Style ^ FontStyle.Italic);
+                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size, selectionFont.Style ^ FontStyle.Italic);
 
             }
         }
 
         private void boldToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(TabControl.TabPages.Count == 0) return;
+            if (TabControl.TabPages.Count == 0) return;
             RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
-            if(textToCahge.SelectedText != "")
+            if (textToCahge.SelectedText != "")
             {
                 var selectionFont = textToCahge.SelectionFont;
 
-                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size,selectionFont.Style ^ FontStyle.Bold);
+                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size, selectionFont.Style ^ FontStyle.Bold);
 
             }
         }
 
         private void unedrlinedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(TabControl.TabPages.Count == 0) return;
+            if (TabControl.TabPages.Count == 0) return;
             RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
-            if(textToCahge.SelectedText != "")
+            if (textToCahge.SelectedText != "")
             {
                 var selectionFont = textToCahge.SelectionFont;
 
-                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size,selectionFont.Style ^ FontStyle.Underline);
+                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size, selectionFont.Style ^ FontStyle.Underline);
 
             }
         }
 
         private void strikeoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(TabControl.TabPages.Count == 0) return;
+            if (TabControl.TabPages.Count == 0) return;
             RichTextBox textToCahge = curTab.Controls.OfType<RichTextBox>().FirstOrDefault();
-            if(textToCahge.SelectedText != "")
+            if (textToCahge.SelectedText != "")
             {
                 var selectionFont = textToCahge.SelectionFont;
 
-                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size,selectionFont.Style ^ FontStyle.Strikeout);
+                textToCahge.SelectionFont = new Font(selectionFont.FontFamily, selectionFont.Size, selectionFont.Style ^ FontStyle.Strikeout);
 
             }
         }
@@ -262,7 +283,7 @@ namespace TextEditor
         }
 
         private void underlineContexMenu_Click(object sender, EventArgs e)
-        { 
+        {
             unedrlinedToolStripMenuItem_Click(sender, e);
         }
 
@@ -298,25 +319,25 @@ namespace TextEditor
 
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if(TabControl.TabPages.Count == 0) return;
+            if (TabControl.TabPages.Count == 0) return;
             selectAllToolStripMenuItem_Click(sender, e);
         }
 
         private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if(TabControl.TabPages.Count == 0) return;
+            if (TabControl.TabPages.Count == 0) return;
             copyToolStripMenuItem_Click(sender, e);
         }
 
         private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if(TabControl.TabPages.Count == 0) return;
+            if (TabControl.TabPages.Count == 0) return;
             cutToolStripMenuItem_Click(sender, e);
         }
 
         private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if(TabControl.TabPages.Count == 0) return;
+            if (TabControl.TabPages.Count == 0) return;
             pasteToolStripMenuItem_Click(sender, e);
         }
 
@@ -326,10 +347,10 @@ namespace TextEditor
             FileInfo file = files[TabControl.TabPages.IndexOf(tabPage)];
             if (file != null && file.Exists)
             {
-                using(StreamReader sr = new StreamReader(file.FullName))
+                using (StreamReader sr = new StreamReader(file.FullName))
                 {
                     string textInFile = sr.ReadToEnd();
-                    if(curText == textInFile)
+                    if (curText == textInFile)
                         return true;
                 }
             }
@@ -346,7 +367,8 @@ namespace TextEditor
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!curTab.isSaved) { 
+            if (!curTab.isSaved)
+            {
                 var dialogResult = AskOfSaving();
                 switch (dialogResult)
                 {
@@ -364,8 +386,8 @@ namespace TextEditor
 
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            if(TabControl.SelectedIndex != -1)
+
+            if (TabControl.SelectedIndex != -1)
                 curTab = (TextBoxTab)TabControl.SelectedTab;
             else
                 curTab = null;
@@ -379,7 +401,8 @@ namespace TextEditor
 
         private void EditingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach (var tab in TabControl.TabPages) {
+            foreach (var tab in TabControl.TabPages)
+            {
                 var textTab = (TextBoxTab)tab;
                 TabControl.SelectedTab = textTab;
                 if (!textTab.isSaved)
@@ -387,14 +410,14 @@ namespace TextEditor
                     DialogResult dialogResult = AskOfSaving();
                     switch (dialogResult)
                     {
-                    case DialogResult.Yes:
-                        SaveButton_Click(sender, e);
-                        break;
-                    case DialogResult.No:
-                        break;
-                    case DialogResult.Cancel:
-                        e.Cancel = true;
-                        return;
+                        case DialogResult.Yes:
+                            SaveButton_Click(sender, e);
+                            break;
+                        case DialogResult.No:
+                            break;
+                        case DialogResult.Cancel:
+                            e.Cancel = true;
+                            return;
                     }
                 }
             }
@@ -410,16 +433,19 @@ namespace TextEditor
         private List<string> GetTabsInList()
         {
             List<string> result = new List<string>();
-            foreach(var tab in TabControl.TabPages) {
+            foreach (var tab in TabControl.TabPages)
+            {
                 TextBoxTab textBoxTab = (TextBoxTab)tab;
-                result.Add(textBoxTab.fileInfo.FullName);
+                if(textBoxTab.fileInfo != null)
+                    result.Add(textBoxTab.fileInfo.FullName);
             }
             return result;
         }
 
         private void saveAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (var tab in TabControl.TabPages) {
+            foreach (var tab in TabControl.TabPages)
+            {
                 var textTab = (TextBoxTab)tab;
                 if (!textTab.isSaved)
                 {
@@ -432,7 +458,7 @@ namespace TextEditor
 
         private void changeFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(TabControl.TabPages.Count == 0)
+            if (TabControl.TabPages.Count == 0)
                 return;
             try
             {
@@ -440,7 +466,8 @@ namespace TextEditor
                 dialogResult.ShowDialog();
                 RichTextBox textInBox = TabControl.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
                 textInBox.SelectionFont = dialogResult.Font;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
@@ -458,10 +485,10 @@ namespace TextEditor
 
         private void AutoSaveTimer_Tick(object sender, EventArgs e)
         {
-            foreach (var tab in  TabControl.TabPages)
+            foreach (var tab in TabControl.TabPages)
             {
                 var textTab = (TextBoxTab)tab;
-                if (!textTab.isSaved)
+                if (!textTab.isSaved && textTab.fileInfo != null)
                 {
                     try
                     {
